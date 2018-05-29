@@ -3,6 +3,9 @@
 	Khaled Belghith, April 2015
 
     - Renamed when added to github, Ben Coleman, 8-10-2015
+	
+	- updated for CSA 4.8
+   Amin Belkhiria, May 2018
 -->
 
 <!-- -------------------------------------------------------------------------------------- -->
@@ -17,11 +20,11 @@
 <!-- -------------------------------------------------------------------------------------- -->
 <!-- Javascript and main code -->
 <!-- -------------------------------------------------------------------------------------- -->
-
-<script language="javascript" type="text/javascript" src="scripts/jquery.flot.js"></script>
-<script language="javascript" type="text/javascript" src="scripts/jquery.flot.categories.js"></script>
-<script language="javascript" type="text/javascript" src="scripts/jquery.flot.stack.js"></script>
-<script language="javascript" type="text/javascript" src="scripts/jquery.flot.resize.js"></script>
+<script language="javascript" type="text/javascript" src="jquery.js"></script> 
+<script language="javascript" type="text/javascript" src="jquery.flot.js"></script> 
+<script language="javascript" type="text/javascript" src="jquery.flot.categories.js"></script>
+<script language="javascript" type="text/javascript" src="jquery.flot.stack.js"></script>
+<script language="javascript" type="text/javascript" src="jquery.flot.resize.js"></script>
 
 
 
@@ -37,7 +40,7 @@
 	var ms_perday = 86400000;
 	var today = new Date();
 	var month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
+	
 	initData();
 	getAllSubscriptions();
 
@@ -76,7 +79,7 @@
 			url: "/api/subscription?count=256",
 			success: processSubscriptions,
 			error: errorLog,
-			async: false
+			async: true
 		});
 	}
 	
@@ -114,8 +117,8 @@
 		// Loop over each subs instance
 		resetData();
 		subs_index = 0;
-		for(subs_index = 0; subs_index < data.length; subs_index++) {
-			subs = data[subs_index]; // Get subscruption
+		for(subs_index = 0; subs_index < data.members.length; subs_index++) {
+			subs = data.members[subs_index]; // Get subscruption
 			start = subs.subscriptionTerm.startDate.substring(0,10);
 			var today = new Date();
 			var startDate = new Date(start);
