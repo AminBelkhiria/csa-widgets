@@ -1,7 +1,10 @@
 <!--
-	CSA Widget - Micro showback report
-	Ben Coleman, March 2014
-	v2.0
+	CSA Widget - Showback Widget
+	Khaled Belghith, April 2015
+    v0.1  - First release
+   - Renamed when added to github, Ben Coleman, 8-10-2015   
+   - updated for CSA 4.8
+   Amin Belkhiria, May 2018
 -->
 
 <!-- -------------------------------------------------------------------------------------- -->
@@ -18,6 +21,7 @@
 <!-- -------------------------------------------------------------------------------------- -->
 <!-- Javascript and main code -->
 <!-- -------------------------------------------------------------------------------------- -->
+<!--script language="javascript" type="text/javascript" src="jquery.js"></script-->
 <script type="text/javascript">
 var total_cur;
 getAllSubscriptions();
@@ -25,20 +29,20 @@ getAllSubscriptions();
 //
 //	Callback function used to asynchronously handle the result of getAllSubscriptions
 //	
-function processSubscriptionDetails(data, textStatus, apiXHR) {
-	//console.dir(data);
+function processSubscriptionDetails(members, textStatus, apiXHR) {
+	//console.dir(members);
 	var col = 'white';
     
     // Get info about the sub
-	var init_price = data.initPrice.price;
-	var cur = data.initPrice.currency;
-	var rec_price = data.recurringPrice.price;
-	var period = data.recurringPrice.basedOn;
-	var startD = new Date(data.history[0].date);
+	var init_price = members.initPrice.price;
+	var cur = members.initPrice.currency;
+	var rec_price = members.recurringPrice.price;
+	var period = members.recurringPrice.basedOn;
+	var startD = new Date(members.history[0].date);
 	var endD = new Date();
     // Special case for cancelled subs
-	if(data.status == "CANCELLED") {
-		endD = new Date(data.lastUpdated);
+	if(members.status == "CANCELLED") {
+		endD = new Date(members.lastUpdated);
 		col = '#000000';
 	}	
     // Work out the "age" of the sub
@@ -72,22 +76,22 @@ function processSubscriptionDetails(data, textStatus, apiXHR) {
 	$("#showback_total").text(Math.round(t_total * 100) / 100);
 	
     // special case for pending subs
-    if(data.status == "PENDING") {
+    if(members.status == "PENDING") {
 		total_price = "0 (Pending)";
 		col = '#444444';
 	}
 	
-	$("#showback_list").append("<tr><td style='color:"+col+"'>" + data.name + "</td><td style='color:"+col+"'>" + cur + total_price + "</td></tr></li>");
+	$("#showback_list").append("<tr><td style='color:"+col+"'>" + members.name + "</td><td style='color:"+col+"'>" + cur + total_price + "</td></tr></li>");
 }
 
 //
 //	Callback function used to asynchronously handle the result of getAllSubscriptions
 //	
-function processSubscriptions(data, textStatus, apiXHR) {
+function processSubscriptions(members, textStatus, apiXHR) {
 	// Loop over each sub instance
 	var sub_index;
-	for(sub_index = 0; sub_index < data.length; sub_index++) {
-		getSubscriptionDetail(data[sub_index].id);
+	for(sub_index = 0; sub_index < members.members.length; sub_index++) {
+		getSubscriptionDetail(members.members[sub_index].id);
 	}
 }
 
@@ -126,7 +130,7 @@ function errorLog(apiXHR, textStatus, errorThrown) {
 </script>
 
 <style type="text/css">
-    #showback_widget {background-color:#777777; padding:5px; color:white;}
+    #showback_widget {background-color:#0079EF; padding:5px; color:white;}
     #showback_widget h4, #showback_widget hr { margin:0 0 5px 0; padding:0px; }
     table.cost_table td {font-size:15px; text-align:left; color: white}
     table.cost_table th {color:white}
