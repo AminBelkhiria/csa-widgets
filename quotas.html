@@ -3,6 +3,9 @@
 	Ben Coleman, March 2014
 	v2.0
     v2.1  - Alternative version, less restrictive checking of properties, no longer only works with measurable properties
+	
+	- updated for CSA 4.8
+   Amin Belkhiria, May 2018
 
 -->
 
@@ -43,8 +46,10 @@
 <!-- -------------------------------------------------------------------------------------- -->
 <!-- Javascript and main code -->
 <!-- -------------------------------------------------------------------------------------- -->
-<script language="javascript" type="text/javascript" src="scripts/jquery.flot.js"></script>
-<script language="javascript" type="text/javascript" src="scripts/jquery.flot.pie.js"></script>
+<script language="javascript" type="text/javascript" src="jquery.js"></script>
+<script language="javascript" type="text/javascript" src="jquery.flot.js"></script>
+<script language="javascript" type="text/javascript" src="jquery.flot.pie.js"></script>
+
 <script type="text/javascript">
 var server_quota = 0;
 var cpu_quota = 0;
@@ -67,8 +72,8 @@ getAllServicesQuota();
 function processServicesQuota(data, textStatus, apiXHR) {
 	// Loop over each svc instance
 	svc_index = 0;
-	for(svc_index = 0; svc_index < data.length; svc_index++) {
-		svc = data[svc_index]; // Get instance
+	for(svc_index = 0; svc_index < data.members.length; svc_index++) {
+		svc = data.members[svc_index]; // Get instance
 		// Invoke getTopology for each service
 		getTopologyQuota(svc.id)
 	}
@@ -181,21 +186,21 @@ function loadQuotas() {
 
 			// Load default system wide quota file
 			var quotas = null;
-			quotas = readTextFile("quotas/defaults.txt");
+			quotas = readTextFile("mpp-theme/quotas/defaults.txt");
 			
 			// Over ride with org specific quota file if found
-			temp = readTextFile("quotas/"+org_name+".txt");
+			temp = readTextFile("mpp-theme/quotas/"+org_name+".txt");
 			if(temp.indexOf("QUOTA FILE") > 0) quotas = temp;
 
 			// Over ride with user specific quota file if found
-			temp = readTextFile("quotas/"+uname+".txt");
+			temp = readTextFile("mpp-theme/quotas/"+uname+".txt");
 			if(temp.indexOf("QUOTA FILE") > 0) quotas = temp;
 
 			// Eval quotas
 			eval(quotas);
 		},
 		error: errorLog,
-		async: false
+		async: true
 	});
 }
 
@@ -286,7 +291,7 @@ function readTextFile(file) {
     var rawFileXHR = new XMLHttpRequest();
     rawFileXHR.open("GET", file, false);
     rawFileXHR.send(null);
-	//console.log(file +"STATUS="+rawFileXHR);
+	console.log(file +"STATUS="+rawFileXHR);
 	if(rawFileXHR.status === 200 || rawFileXHR.status == 0) {
 		return rawFileXHR.responseText;
 	}
