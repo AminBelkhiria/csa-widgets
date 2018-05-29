@@ -3,7 +3,7 @@
 // These are system wide default quotas
 //  - only used if not overridden by the organisation or user quota file
 
-server_quota = 8;
-cpu_quota = 16;
-mem_quota = 12;    	// GB
+server_quota = 120;
+cpu_quota = 64;
+mem_quota = 128;    	// GB
 disk_quota = 800;   // GB
