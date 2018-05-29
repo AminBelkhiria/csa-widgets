@@ -1,0 +1,17 @@
+<?xml version='1.0' ?>
+<xml>
+	<last-update>
+		<date>07-05-2018</date>
+		<time>08:31:42</time>
+	</last-update>
+	<server-details>
+		<name>amazon.lab.local</name>
+		<ip>10.32.55.1</ip>
+	</server-details>
+	<consumed>
+		<nbr-vms>27</nbr-vms>
+		<disk>5000</disk>
+		<memory>256</memory>
+		<cpu>24</cpu>
+	</consumed>
+</xml>

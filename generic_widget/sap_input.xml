@@ -1,0 +1,17 @@
+<?xml version='1.0' ?>
+<xml>
+        <last-update>
+                <date>29May2018</date>
+                <time>14:30:01</time>
+        </last-update>
+        <server-details>
+                <name>GO4SAP Local</name>
+                <ip>LaMa Enterprise</ip>
+        </server-details>
+        <consumed>
+                <nbr-vms>10</nbr-vms>
+                <memory>271</memory>
+		<disk>2000</disk>
+                <cpu>52</cpu>
+        </consumed>
+</xml>

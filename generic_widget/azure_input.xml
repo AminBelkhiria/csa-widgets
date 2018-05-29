@@ -1,0 +1,17 @@
+<?xml version='1.0' ?>
+<xml>
+	<last-update>
+		<date>04-07-2018</date>
+		<time>11:23:15</time>
+	</last-update>
+	<server-details>
+		<name>azure.lab.local</name>
+		<ip>10.40.125.8</ip>
+	</server-details>
+	<consumed>
+		<nbr-vms>24</nbr-vms>
+		<disk>400</disk>
+		<memory>32</memory>
+		<cpu>12</cpu>
+	</consumed>
+</xml>
