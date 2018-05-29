@@ -2,7 +2,9 @@
 	CSA Widget - Services Widget
 	Khaled Belghith, April 2015
     v0.1  - First release
-   - Renamed when added to github, Ben Coleman, 8-10-2015    
+   - Renamed when added to github, Ben Coleman, 8-10-2015   
+   - updated for CSA 4.8
+   Amin Belkhiria, May 2018
 -->
 
 <!-- -------------------------------------------------------------------------------------- -->
@@ -17,9 +19,10 @@
 <!-- -------------------------------------------------------------------------------------- -->
 <!-- Javascript and main code -->
 <!-- -------------------------------------------------------------------------------------- -->
-<script src="bower_components/jquery/dist/jquery.js"></script>
-<script language="javascript" type="text/javascript" src="scripts/jquery.flot.js"></script>
-<script language="javascript" type="text/javascript" src="scripts/jquery.flot.pie.js"></script>
+
+<script language="javascript" type="text/javascript" src="jquery.js"></script> 
+<script language="javascript" type="text/javascript" src="jquery.flot.js"></script> 
+<script language="javascript" type="text/javascript" src="jquery.flot.pie.js"></script>
 <script type="text/javascript">
 
 	var timer_id;
@@ -41,9 +44,6 @@
 
 	var placeholder_serv = $("#placeholder_serv");
 	getCurrentServices();
-
-	// Show the initial default chart
-	displayCurrentServicesPie(placeholder_serv, services_data);
 
 	function initializeDataForServiceStatus(services_data, i, status){
 		services_data[i] = {
@@ -68,7 +68,7 @@
 			url: "/api/myservice?count=256",
 			success: processCurrentServices,
 			error: errorLog,
-			async: false
+			//async: false
 		});
 	};
 	
@@ -78,13 +78,16 @@
 	function processCurrentServices(data, textStatus, apiXHR) {
 		// Loop over each subs instance
 		servs_index = 0;
-		for(servs_index = 0; servs_index < data.length; servs_index++) {
-			serv = data[servs_index]; // Get service
+		for(servs_index = 0; servs_index < data.members.length; servs_index++) {
+			serv = data.members[servs_index]; // Get service
 			var status = getStatusIndexFromStatus(serv.status);
 			services_data[status].data += 1; 
 		};
 		clearTimeout(timer_id);
 		timer_id = setTimeout(getCurrentServices, refresh_interval_secs * 1000);
+		
+		// Show the initial default chart
+	    displayCurrentServicesPie(placeholder_serv, services_data);
 	}
 	
 	//
@@ -157,6 +160,6 @@
 </script>
 
 <style type="text/css">
-    #currentservices_widget {padding:5px; color:black; /* make the percentage height on placeholder_serv work */}
+    #currentservices_widget {padding:5px; color:black; height: 100%;/* make the percentage height on placeholder_serv work */}
     #currentservices_widget h4, #currentservices_widget hr { margin:0 0 5px 0; padding:0px;}
 </style>
