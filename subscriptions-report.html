@@ -7,7 +7,6 @@
 	- updated for CSA 4.8
    Amin Belkhiria, May 2018
 -->
-
 <!-- -------------------------------------------------------------------------------------- -->
 <!-- HTML and widget display -->
 <!-- -------------------------------------------------------------------------------------- -->
@@ -20,11 +19,11 @@
 <!-- -------------------------------------------------------------------------------------- -->
 <!-- Javascript and main code -->
 <!-- -------------------------------------------------------------------------------------- -->
-<script language="javascript" type="text/javascript" src="jquery.js"></script> 
-<script language="javascript" type="text/javascript" src="jquery.flot.js"></script> 
-<script language="javascript" type="text/javascript" src="jquery.flot.categories.js"></script>
-<script language="javascript" type="text/javascript" src="jquery.flot.stack.js"></script>
-<script language="javascript" type="text/javascript" src="jquery.flot.resize.js"></script>
+
+<script language="javascript" type="text/javascript" src="mpp-theme/scripts/jquery.flot.js"></script> 
+<script language="javascript" type="text/javascript" src="mpp-theme/scripts/jquery.flot.categories.js"></script>
+<script language="javascript" type="text/javascript" src="mpp-theme/scripts/jquery.flot.stack.js"></script>
+<script language="javascript" type="text/javascript" src="mpp-theme/scripts/jquery.flot.resize.js"></script>
 
 
 
@@ -32,9 +31,9 @@
 	var timer_id;
 	var refresh_interval_secs = 5;
 	
-	var d1 = [];
-	var d2 = [];
-	var d3 = [];
+	var subd1 = [];
+	var subd2 = [];
+	var subd3 = [];
 	
     var nbrGrads = 10;
 	var ms_perday = 86400000;
@@ -53,9 +52,9 @@
 			var month = date.getUTCMonth(); 
 			var day = date.getUTCDate();
 			var newdate = month_names_short[month] + " " + day;
-			d1.push([newdate, 0]);
-			d2.push([newdate, 0]);
-			d3.push([newdate, 0]);
+			subd1.push([newdate, 0]);
+			subd2.push([newdate, 0]);
+			subd3.push([newdate, 0]);
 		};
 	}
 	
@@ -64,9 +63,9 @@
 	//
 	function resetData() {
 		for (var i = 0; i < nbrGrads; i += 1) {
-			(d1[i])[1] = 0;
-			(d2[i])[1] = 0;
-			(d3[i])[1] = 0;
+			(subd1[i])[1] = 0;
+			(subd2[i])[1] = 0;
+			(subd3[i])[1] = 0;
 		};
 	}
 	
@@ -124,11 +123,11 @@
 			var startDate = new Date(start);
 			dateIndex = nbrGrads - dateDiff(startDate,today) - 1;
 			if (subs.status == "CANCELLED"){
-				incrementValue(d3, dateIndex)
+				incrementValue(subd3, dateIndex)
 			}else if (subs.status == "ACTIVE"){
-				incrementValue(d2, dateIndex)
+				incrementValue(subd2, dateIndex)
 			}else if (subs.status == "TERMINATED"){
-                incrementValue(d1, dateIndex)
+                incrementValue(subd1, dateIndex)
 			}
 		}
 		plotWithOptions();
@@ -138,9 +137,9 @@
 	
 
 	function plotWithOptions() {
-		$.plot("#placeholder", [ {data: d1, label : " Terminated"},
-		                         {data: d2, label : " Active"},								 
-								 {data: d3, label : " Cancelled"} ], {
+		$.plot("#placeholder", [ {data: subd1, label : " Terminated"},
+		                         {data: subd2, label : " Active"},								 
+								 {data: subd3, label : " Cancelled"} ], {
 			xaxis: {
 				mode: "categories",
 				tickLength: 0
